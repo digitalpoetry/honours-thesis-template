@@ -1,0 +1,8 @@
+\ProvidesPackage{style/bib}
+
+\usepackage{natbib}
+\renewcommand{\cite}[1]{\citep{#1}}
+\newcommand{\newcite}[1]{\citet{#1}}
+\newcommand{\shortcite}[1]{\citeyearpar{#1}}
+\newcommand{\owncite}[1]{\citeauthor{#1}'s \citeyearpar{#1}}
+\newcommand{\seecite}[1]{\citep[see][]{#1}}

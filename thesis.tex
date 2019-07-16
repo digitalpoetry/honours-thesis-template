@@ -1,0 +1,144 @@
+\documentclass{usydthesis}
+
+% Configuration
+
+\def\degree{Bachelor of Information Technology (Honours)}
+\def\department{School of Information Technologies}
+
+\title{{\bf\Huge Thesis Title}}
+\author{Your Name Here}
+\def\sid{199938001}
+\def\supervisor{Dr. Supe R. Visor}
+%\def\assocsupervisor{Comment this line to remove assoc supervisor}
+
+%%%%%%%%%%%%
+% Packages
+
+\usepackage{alltt}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage[colorlinks=false,plainpages=false,a4paper,pdfborder={0 0 0},backref=false]{hyperref}
+\usepackage[all]{hypcap}
+\usepackage{listings}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{pdflscape}
+\usepackage{pgf}
+\usepackage{pifont}
+\usepackage{qtree}
+\usepackage[english,rounding]{rccol}
+\usepackage{rotating}
+\usepackage{setspace}
+\usepackage{style/bib}
+\usepackage{subfigure}
+\usepackage{tabularx}
+\usepackage{tipa}
+\usepackage{wrapfig}
+\usepackage{xcolor}
+\usepackage{xspace}
+
+\rcDecimalSignOutput{.} % rccol
+
+\newenvironment{sidewaystablepage}{\begin{landscape}\begin{table}}{\end{table}\end{landscape}}
+
+\def\subsectionautorefname{Section}
+\def\subtableautorefname{Table}
+\def\subfigureautorefname{Figure}
+\def\chapterautorefname{Chapter}
+
+\newcommand{\tick}{\ding{51}}
+\newcommand{\cross}{\ding{53}}
+
+\newcommand{\todo}[1]{{\color{red} #1}}
+\newcommand{\sent}[1]{{\color{blue}\texttt{#1}\xspace}}
+
+
+%%%%%%%%%%%%
+% Maths functions
+\def\O{\mbox{O}}
+
+%%%%%%%%%%%%
+% Setup
+
+%   Page size:
+\oddsidemargin=0cm	% really 1in
+\evensidemargin=0cm
+\textwidth=6.2677165in
+
+% initial page numbers:  i, ii, iii, ...
+\renewcommand{\thepage}{\roman{page}}
+
+\input{morenames.tex}
+
+%%%%%%%%%%%%
+% Start
+
+\begin{document}
+
+%%%%%%%%%%%%
+% Title page
+\maketitle
+
+\setstretch{1.5}
+
+% intro pages
+\cleardoublepage
+\phantomsection
+\input{plagiarism/plagiarism.tex}
+\cleardoublepage
+\phantomsection
+\input{abstract/abstract.tex}
+\cleardoublepage
+\phantomsection
+\input{thanks/thanks.tex}
+
+% tables
+\cleardoublepage
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+{\makeatletter
+\renewcommand*\numberline[1]{\hb@xt@\@tempdima{#1 \hfil}\hspace*{1em}}
+\makeatother
+\listoffigures
+\listoftables
+\cleardoublepage
+}
+
+%%%%%%%%%%%%
+% Chapters
+\setcounter{page}{1}
+\setcounter{chapter}{0}
+
+% main page numbers:  1, 2, 3, ...
+\renewcommand{\thepage}{\arabic{page}}	
+\setupParagraphs
+
+\input{introduction/introduction.tex}
+\input{litreview/litreview.tex}
+\input{evaluation/evaluation.tex}
+\input{experiments/experiments.tex}
+\input{results/results.tex}
+\input{conclusion/conclusion.tex}
+
+
+%%%%%%%%%%%%
+% End
+
+% Bibliography
+\bibliographystyle{style/mybibstyle}
+{
+\setstretch{1.25}
+\cleardoublepage
+\phantomsection
+\bibliography{references}
+}
+
+%%%% Appendices
+%%%\appendix
+%%%\addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
+%%%\input{wikifeats/wikifeats.tex}
+%%%\input{candcner/candcner.tex}
+%%%\input{comparedata/comparedata.tex}
+
+\end{document}

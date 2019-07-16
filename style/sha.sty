@@ -1,0 +1,74 @@
+% sha.sty -- Donald Arseneau
+% \pixel is the output pixel size.  Default is 300 dpi.
+% 
+% Shading *should* be part of a dvi-driver standard.  But only postscript
+% handles it properly.
+% 
+% You can shade from within TeX, but it is **VERY** inefficient...
+%
+\newdimen\pixel
+\pixel=1in \divide\pixel300
+%
+%  The contents of \shadebox define the shading pattern.
+%
+\newbox\shadebox
+\setbox\shadebox\hbox{\kern \pixel
+   \vrule\@height2\pixel\@depth-1\pixel \@width\pixel
+   \kern \pixel
+   \vrule\@height4\pixel\@depth-3\pixel \@width\pixel
+}
+%
+% \shade works like \mbox, except the contents are shaded.  The height
+% and depth of the shaded area is at least the height and depth of ")".
+% There is one extra space entered at the beginning and end of the 
+% parameter text.
+%
+\def\shade#1{\leavevmode\begingroup
+ \setbox\@tempboxa\hbox{ {#1} \mathstrut}%
+ \rlap{\lower\dp\@tempboxa\hbox to\wd\@tempboxa{\shadefill\@tempboxa}}%
+ \box\@tempboxa \endgroup}
+%
+% \shadefill{boxnumber} draws a block of shading with height equal to 
+% the height PLUS depth of the box number. The width of the shading is
+% flexible: 0pt plus 1 fill (like \hfill).
+%
+\def\shadefill#1{\setbox\@tempboxa\vbox to\z@{\vss
+   \@tempdima\ht#1\advance\@tempdima\dp#1%
+   \cleaders \copy\shadebox \vskip\@tempdima}%
+  \cleaders\box\@tempboxa \hfill}
+%
+% \shadecells is for shading {tabular} entries.  It has the same
+% usage as \cline, except that instead of drawing a line under 
+% a range of entries, it shades over them.
+%
+\def\shadecells#1{\@shadecells[#1]}
+\def\@shadecells[#1-#2]{\noalign{\global\@cla#1\relax
+\global\advance\@cla\m@ne
+\ifnum\@cla>\z@\global\let\@gtempa\@shcellA\else
+  \global\let\@gtempa\@shcellB\fi
+\global\@clb#2\relax
+\global\advance\@clb-\@cla}\@gtempa}
+%
+\def\@shcellA{\multispan\@cla&\@shcellB}
+%
+\def\@shcellB{\multispan\@clb \unskip 
+ \shadefill\@arstrutbox
+\cr}
+%
+\endinput
+% % sample:
+% \documentstyle[sha]{article}
+% 
+% \begin{document}
+% 
+% \noindent
+% \begin{tabular}{c@{\extracolsep{12pt}}cccccc}
+% 1&2&3&4&5&6&7\\
+% one&two&three&four&five&six&seven\\\shadecells{3-4}
+% Doc&Happy&Sleepy&Sneezy&Bashful&Grumpy&Dopey\\\shadecells{1-1}\shadecells{6-6}
+% Sunday&Monday&Tuesday&Wednesday&Thursday&Friday&Saturday\\\shadecells{4-6}
+% \end{tabular}
+% 
+% Test \shade{this} and even something \fbox{\shade{more}} special!
+% \end{document}
+
